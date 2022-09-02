@@ -1,20 +1,20 @@
-package br.com.leandrosenazua.GerenciamentoPlanta.Model;
+package br.com.leandrosenazua.GerenciamentoPlanta.Dto;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.UUID;
 
-@Entity
-@Table(name = "TB_PLANTA")
-public class PlantaModel implements Serializable {
-    private static final long serialPlantaUID = 1;
+public class PlantaDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotBlank
     private UUID id;
-    @Column(nullable = false)
+    @NotBlank
     private String nomePlanta;
-    @Column(nullable = false)
+    @NotBlank
     private int setorCasa;
 
     public UUID getId() {

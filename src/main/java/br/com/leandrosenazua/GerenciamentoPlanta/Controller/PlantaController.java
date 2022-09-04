@@ -9,6 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -28,4 +33,20 @@ public class PlantaController {
         BeanUtils.copyProperties(plantaDto, plantaModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(plantaService.save(plantaModel));
     }
+
+    @GetMapping
+    public ResponseEntity<List<PlantaModel>> getAllPlantas(){
+        return ResponseEntity.status(HttpStatus.OK).body(plantaService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getOnePlanta(@PathVariable (value = "id") UUID id){
+        Optional<PlantaModel> plantaModelOptional = PlantaService.findId(id);
+        if(!plantaModelOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Planta not found");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(plantaModelOptional.get());
+    }
+
 }
